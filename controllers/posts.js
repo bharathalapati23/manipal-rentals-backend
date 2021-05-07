@@ -1,7 +1,6 @@
 import ListSchema from '../models/postMessage.js'
 
 export const getPosts = async (req, res) => {
-    // console.log(req.query)
     let sortObj = {
         rent:Number(req.query.rent)
     }
@@ -11,8 +10,6 @@ export const getPosts = async (req, res) => {
             listings = await ListSchema.find();
         else 
             listings = await ListSchema.find().sort(sortObj);
-
-        //console.log(listings.length)
 
         res.status(200).json(listings);
     } catch (error) {
