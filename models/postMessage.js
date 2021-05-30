@@ -1,6 +1,8 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose'); 
 
 const listSchema = mongoose.Schema({
+    refId: Number,
+    title: String,
     apOrBung: String,
     bathroom: Number,
     bedroom: Number,
@@ -36,4 +38,5 @@ const listSchema = mongoose.Schema({
 
 const ListSchema = mongoose.model('Listing', listSchema)
 
-export default ListSchema;
+module.exports = { ListSchema }
+//export default ListSchema;

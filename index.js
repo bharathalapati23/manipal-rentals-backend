@@ -1,9 +1,16 @@
-import express from 'express'
-import bodyParser from 'body-parser'
-import mongoose from 'mongoose'
-import cors from 'cors'
-import postRoutes from './routes/posts.js'
-import dotenv from "dotenv";
+//import express from 'express'
+const express = require('express')
+//import mongoose from 'mongoose'
+const mongoose = require('mongoose'); 
+//import cors from 'cors'
+const cors = require('cors')
+//import postRoutes from './routes/posts.js'
+const postRoutes = require('./routes/posts.js')
+//import leadRoutes from './routes/leads.js'
+const leadRoutes = require('./routes/leads.js')
+//import dotenv from "dotenv";
+const dotenv = require('dotenv'); 
+
 
 dotenv.config();
 
@@ -14,7 +21,7 @@ app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors())
 
 app.use('/posts', postRoutes)
-
+app.use('/leads', leadRoutes)
 
 
 
