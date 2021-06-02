@@ -3,7 +3,7 @@ const creds = require('../googleCredentials.json')
 
 
 
-async function gsrun(cl, res) {
+async function gsrun(cl, req, res) {
     try {
         const gsapi = google.sheets({ version: "v4", auth: cl })
         const opt = {
@@ -12,7 +12,17 @@ async function gsrun(cl, res) {
         }
 
         var data = await gsapi.spreadsheets.values.get(opt)
-        console.log(data.data.values)
+        console.log(req.body)
+
+        const excelObj = [
+            req.body.name,
+            req.body.contactNumber,
+            req.body.maxBudget,
+            req.body.preferredZones.join(','),
+            req.body.preferredConfig.join(','),
+            req.body.enquiryDesc,
+            req.body.preferredTime
+        ]
 
         await gsapi.spreadsheets.values.append({
             spreadsheetId: '182PlZIsi2YXCs5zeUSKuoS_KTxMu39_QT_BDOv3XqEo',
@@ -20,12 +30,12 @@ async function gsrun(cl, res) {
             valueInputOption: 'USER_ENTERED',
             resource: {
                 values: [
-                    ['Sampat3', '9876543210', 'sampat2@gmail', 'MIT', '543216', 'Testing 3', '1000', '100BHK']
+                    excelObj
                 ]
             }
         })
 
-        res.send({ message: 'successful'})
+        res.send({ message: 'successful' })
     }
     catch (error) {
         console.log(error)
@@ -34,7 +44,6 @@ async function gsrun(cl, res) {
 }
 
 const postLeads = async (req, res) => {
-    console.log(req.body)
     try {
         const client = new google.auth.JWT(
             creds.client_email,
@@ -49,7 +58,7 @@ const postLeads = async (req, res) => {
                 return
             } else {
                 console.log('Connected')
-                gsrun(client, res)
+                gsrun(client, req, res)
             }
         })
     } catch (error) {
