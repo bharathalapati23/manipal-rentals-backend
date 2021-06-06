@@ -1,5 +1,6 @@
 //import ListSchema from '../models/postMessage.js'
 const { ListSchema } = require('../models/postMessage.js')
+var ObjectId = require('mongodb').ObjectID;
 
 const getPosts = async (req, res) => {
     let sortObj = {
@@ -38,4 +39,18 @@ const createPost = async (req, res) => {
     }
 }
 
-module.exports = { getPosts, createPost }
+const getSinglePost = async (req, res) => {
+    let objId = req.query.objId
+
+    try {
+        let listing = []
+        listing = await ListSchema.find({"_id" : ObjectId(objId)});
+
+        res.status(200).json(listing);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+
+    }
+}
+
+module.exports = { getPosts, createPost, getSinglePost }
