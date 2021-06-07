@@ -21,7 +21,8 @@ async function gsrun(cl, req, res) {
             req.body.preferredZones.join(','),
             req.body.preferredConfig.join(','),
             req.body.enquiryDesc,
-            req.body.preferredTime
+            req.body.preferredTime,
+            req.body.searchId
         ]
 
         await gsapi.spreadsheets.values.append({
