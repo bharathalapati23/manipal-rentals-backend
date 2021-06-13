@@ -14,27 +14,48 @@ async function gsrun(cl, req, res) {
         var data = await gsapi.spreadsheets.values.get(opt)
         console.log(req.body)
 
-        const excelObj = [
-            req.body.name,
-            req.body.contactNumber,
-            req.body.maxBudget,
-            req.body.preferredZones.join(','),
-            req.body.preferredConfig.join(','),
-            req.body.enquiryDesc,
-            req.body.preferredTime,
-            req.body.searchId
-        ]
+        if (!req.body.contactUs) {
+            const excelObj = [
+                req.body.name,
+                req.body.contactNumber,
+                req.body.maxBudget,
+                req.body.preferredZones.join(','),
+                req.body.preferredConfig.join(','),
+                req.body.enquiryDesc,
+                req.body.preferredTime,
+                req.body.searchId
+            ]
 
-        await gsapi.spreadsheets.values.append({
-            spreadsheetId: '182PlZIsi2YXCs5zeUSKuoS_KTxMu39_QT_BDOv3XqEo',
-            range: 'Enquiry!A:C',
-            valueInputOption: 'USER_ENTERED',
-            resource: {
-                values: [
-                    excelObj
-                ]
-            }
-        })
+            await gsapi.spreadsheets.values.append({
+                spreadsheetId: '182PlZIsi2YXCs5zeUSKuoS_KTxMu39_QT_BDOv3XqEo',
+                range: 'Enquiry!A:C',
+                valueInputOption: 'USER_ENTERED',
+                resource: {
+                    values: [
+                        excelObj
+                    ]
+                }
+            })
+        }
+        else {
+            const excelObj = [
+                req.body.name,
+                req.body.emailId,
+                req.body.contactNumber,
+                req.body.enquiryDesc,
+            ]
+
+            await gsapi.spreadsheets.values.append({
+                spreadsheetId: '182PlZIsi2YXCs5zeUSKuoS_KTxMu39_QT_BDOv3XqEo',
+                range: 'Contact Us!A:C',
+                valueInputOption: 'USER_ENTERED',
+                resource: {
+                    values: [
+                        excelObj
+                    ]
+                }
+            })
+        }
 
         res.send({ message: 'successful' })
     }
