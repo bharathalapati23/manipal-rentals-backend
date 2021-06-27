@@ -8,6 +8,7 @@ const listSchema = mongoose.Schema({
     bedroom: Number,
     desc: String,
     rent: Number,
+    deposit: Number,
     images: [String],
     zone: String,
     bedroomDetails: [{

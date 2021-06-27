@@ -25,10 +25,13 @@ const createPost = async (req, res) => {
         ...req.body,
         bedroom: Number(req.body.bedroom),
         rent: Number(req.body.rent),
+        deposit: Number(req.body.deposit),
         bathroom: Number(req.body.bathroom),
         furnishing: Number(req.body.furnishing),
         refId: Number(req.body.refId),
     }
+
+    console.log(listing)
 
     const newListing = new ListSchema(listing)
     try {
