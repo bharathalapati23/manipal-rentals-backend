@@ -9,7 +9,7 @@ const getPosts = async (req, res) => {
     try {
         let listings = []
         if (sortObj.rent === 0)
-            listings = await ListSchema.find();
+            listings = await ListSchema.find().sort({"createdAt": -1});
         else
             listings = await ListSchema.find().sort(sortObj);
 
