@@ -10,11 +10,14 @@ const postRoutes = require('./routes/posts.js')
 const leadRoutes = require('./routes/leads.js')
 //import dotenv from "dotenv";
 const dotenv = require('dotenv'); 
+const compression = require('compression')
 
 
 dotenv.config();
 
 const app = express()
+
+app.use(compression())
 
 app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
