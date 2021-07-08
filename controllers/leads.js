@@ -12,6 +12,8 @@ async function gsrun(cl, req, res) {
         }
 
         var data = await gsapi.spreadsheets.values.get(opt)
+        let date = new Date()
+
         console.log(req.body)
 
         if (!req.body.contactUs) {
@@ -24,7 +26,7 @@ async function gsrun(cl, req, res) {
                 req.body.enquiryDesc,
                 req.body.preferredTime,
                 req.body.searchId,
-                Date.now()
+                date.toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})
             ]
 
             await gsapi.spreadsheets.values.append({
@@ -44,6 +46,7 @@ async function gsrun(cl, req, res) {
                 req.body.emailId,
                 req.body.contactNumber,
                 req.body.enquiryDesc,
+                date.toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})
             ]
 
             await gsapi.spreadsheets.values.append({
