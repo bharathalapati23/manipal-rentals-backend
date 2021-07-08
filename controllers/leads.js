@@ -23,7 +23,8 @@ async function gsrun(cl, req, res) {
                 req.body.preferredConfig.join(','),
                 req.body.enquiryDesc,
                 req.body.preferredTime,
-                req.body.searchId
+                req.body.searchId,
+                Date.now()
             ]
 
             await gsapi.spreadsheets.values.append({
