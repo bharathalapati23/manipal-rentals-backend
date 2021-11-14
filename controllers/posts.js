@@ -9,14 +9,13 @@ const getPosts = async (req, res) => {
     try {
         let listings = []
         if (sortObj.rent === 0)
-            listings = await ListSchema.find().sort({"createdAt": -1});
+            listings = await ListSchema.find({ "active": true }).sort({"createdAt": -1});
         else
-            listings = await ListSchema.find().sort(sortObj);
+            listings = await ListSchema.find({ "active": true }).sort(sortObj);
 
         res.status(200).json(listings);
     } catch (error) {
         res.status(404).json({ message: error.message });
-
     }
 }
 
