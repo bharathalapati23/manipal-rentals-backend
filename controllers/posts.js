@@ -25,6 +25,7 @@ const createPost = async (req, res) => {
         bedroom: Number(req.body.bedroom),
         rent: Number(req.body.rent),
         deposit: Number(req.body.deposit),
+        active: true
     }
 
     console.log('asdfasdf', listing)

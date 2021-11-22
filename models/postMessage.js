@@ -11,6 +11,7 @@ const listSchema = mongoose.Schema({
     deposit: Number,
     images: [String],
     zone: String,
+    active: Boolean,
     bedroomDetails: [{
         singleBed: Boolean,
         doubleBed: Boolean,
