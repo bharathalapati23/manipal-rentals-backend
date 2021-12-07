@@ -32,6 +32,10 @@ const listSchema = mongoose.Schema({
         coffeeTable: Boolean,
         chairs: Boolean,
     },
+    manipalDistanceMatrix: [{
+        name: String,
+        distance: String,
+    }],
     createdAt: {
         type: Date,
         default: new Date()

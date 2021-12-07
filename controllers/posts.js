@@ -2,6 +2,8 @@
 const { ListSchema } = require('../models/postMessage.js')
 var ObjectId = require('mongodb').ObjectID;
 
+const { distanceCalculatorGoogle } = require('./distanceMatrix');
+
 const getPosts = async (req, res) => {
     let sortObj = {
         rent: Number(req.query.rent)
@@ -9,7 +11,7 @@ const getPosts = async (req, res) => {
     try {
         let listings = []
         if (sortObj.rent === 0)
-            listings = await ListSchema.find({ "active": true }).sort({"createdAt": -1});
+            listings = await ListSchema.find({ "active": true }).sort({ "createdAt": -1 });
         else
             listings = await ListSchema.find({ "active": true }).sort(sortObj);
 
@@ -44,7 +46,7 @@ const getSinglePost = async (req, res) => {
 
     try {
         let listing = []
-        listing = await ListSchema.find({"_id" : ObjectId(objId)});
+        listing = await ListSchema.find({ "_id": ObjectId(objId) });
 
         res.status(200).json(listing);
     } catch (error) {
@@ -53,4 +55,32 @@ const getSinglePost = async (req, res) => {
     }
 }
 
-module.exports = { getPosts, createPost, getSinglePost }
+const addDistance = async (req, res) => {
+    let objId = req.body.objId
+    let coord = req.body.coord
+
+    console.log(objId)
+    try {
+        // let listing = []
+        // listing = await ListSchema.find({ "_id": ObjectId(objId) });
+
+        let manipalDistanceMatrix = await distanceCalculatorGoogle(coord)
+        // console.log('m', manipalDistanceMatrix)
+
+        ListSchema.findOneAndUpdate({ '_id': ObjectId(objId) },
+            {
+                "$set": {
+                    "manipalDistanceMatrix": manipalDistanceMatrix
+                }
+            }
+            , function (err, doc) {
+                if (err) console.log(err)
+            });
+        res.status(200).json();
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+
+    }
+}
+
+module.exports = { getPosts, createPost, getSinglePost, addDistance }
