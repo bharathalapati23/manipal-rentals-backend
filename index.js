@@ -9,6 +9,7 @@ const postRoutes = require('./routes/posts.js')
 //import leadRoutes from './routes/leads.js'
 const leadRoutes = require('./routes/leads.js')
 const uploadRoutes = require('./routes/uploads.js')
+const qrCodeRoutes = require('./routes/qrCodeEntry.js')
 //import dotenv from "dotenv";
 const dotenv = require('dotenv'); 
 const compression = require('compression')
@@ -27,6 +28,7 @@ app.use(cors())
 app.use('/posts', postRoutes)
 app.use('/leads', leadRoutes)
 app.use('/uploads', uploadRoutes)
+app.use('/qrCodeInfo', qrCodeRoutes)
 
 
 
