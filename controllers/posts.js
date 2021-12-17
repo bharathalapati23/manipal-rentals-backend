@@ -30,7 +30,6 @@ const createPost = async (req, res) => {
         active: true
     }
 
-    console.log('asdfasdf', listing)
 
     const newListing = new ListSchema(listing)
     try {
@@ -61,11 +60,7 @@ const addDistance = async (req, res) => {
 
     console.log(objId)
     try {
-        // let listing = []
-        // listing = await ListSchema.find({ "_id": ObjectId(objId) });
-
         let manipalDistanceMatrix = await distanceCalculatorGoogle(coord)
-        // console.log('m', manipalDistanceMatrix)
 
         ListSchema.findOneAndUpdate({ '_id': ObjectId(objId) },
             {

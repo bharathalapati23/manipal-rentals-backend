@@ -47,11 +47,9 @@ const distanceCalculatorGoogle = async (coordinates) => {
 
     url += '&key=AIzaSyCTSha9Eyy1pEbcgVOJtgUPzS - OezK5IQA'
 
-    //console.log(url)
 
     var config = {
         method: 'get',
-        //url: 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=40.6655101%2C-73.89188969999998&destinations=40.659569%2C-73.933783%7C40.729029%2C-73.851524%7C40.6860072%2C-73.6334271%7C40.598566%2C-73.7527626&key=AIzaSyCTSha9Eyy1pEbcgVOJtgUPzS - OezK5IQA',
         url,
         headers: {}
     };
@@ -59,21 +57,18 @@ const distanceCalculatorGoogle = async (coordinates) => {
     let manipalDistanceMatrix = []
     await axios(config)
         .then(function (response) {
-            //console.log(JSON.stringify(response.data.rows));
             for (let i = 0; i < response.data.rows[0].elements.length; i++) {
                 manipalDistanceMatrix.push({
                     name: locationInfo[i].name,
                     distance: response.data.rows[0].elements[i].distance.text
                 })
             }
-            //console.log('manipal', manipalDistanceMatrix)
         })
         .catch(function (error) {
             console.log(error);
             return null
         });
 
-    //console.log('x', manipalDistanceMatrix)
     return manipalDistanceMatrix
 }
 

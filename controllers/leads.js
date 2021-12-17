@@ -14,8 +14,6 @@ async function gsrun(cl, req, res) {
         var data = await gsapi.spreadsheets.values.get(opt)
         let date = new Date()
 
-        console.log(req.body)
-
         if (!req.body.contactUs) {
             const excelObj = [
                 req.body.name,

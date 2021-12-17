@@ -13,13 +13,12 @@ async function gsrun(cl, req, res) {
 
         let date = new Date()
 
-        console.log(req.body.excelRow)
 
         if (!req.body.excelRow) {
             const excelObj = [
                 date.toLocaleString(undefined, { timeZone: 'Asia/Kolkata' }),
                 req.body.name,
-                req.body.contactNumber,
+                req.body.contactNo,
             ]
 
             await gsapi.spreadsheets.values.append({
@@ -32,22 +31,25 @@ async function gsrun(cl, req, res) {
                     ]
                 }
             }).then((response) => {
-                console.log('response', response?.data?.updates?.updatedRange.slice(-2))
-                res.send({ message: 'successful', excelRow: response?.data })
+                let updatedRow = response?.data?.updates?.updatedRange.split(":")[1].match(/\d+/)[0];
+                res.send({ message: 'successful', excelRow: updatedRow })
             })
         }
         else {
             const excelObj = [
-                req.body.name,
-                req.body.emailId,
-                req.body.contactNumber,
-                req.body.enquiryDesc,
-                date.toLocaleString(undefined, { timeZone: 'Asia/Kolkata' })
+                req.body.propertyName,
+                req.body.houseNo,
+                req.body.totalFloors,
+                req.body.configuration,
+                req.body.furnishing,
+                req.body.rental,
+                req.body.deposit,
+                req.body.movingOut,
             ]
 
             await gsapi.spreadsheets.values.update({
                 spreadsheetId: '182PlZIsi2YXCs5zeUSKuoS_KTxMu39_QT_BDOv3XqEo',
-                range: `QR Code!D${req.body.excelRow}:H${req.body.excelRow}`,
+                range: `QR Code!D${req.body.excelRow}:K${req.body.excelRow}`,
                 valueInputOption: 'USER_ENTERED',
                 resource: {
                     values: [
@@ -55,12 +57,11 @@ async function gsrun(cl, req, res) {
                     ]
                 }
             }).then((response) => {
-                console.log('response', response)
                 res.send({ message: 'successful' })
             })
         }
 
-        
+
     }
     catch (error) {
         console.log(error)
